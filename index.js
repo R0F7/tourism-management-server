@@ -28,6 +28,12 @@ async function run() {
 
     const tourismCollection = client.db('tourismDB').collection('spot');
 
+    app.get('/tourists-spot', async (req, res) => {
+        const cursor = tourismCollection.find();
+        const result = await cursor.toArray();
+        res.send(result)
+    })
+
     app.post('/tourists-spot', async (req, res) => {
         const info = req.body;
         console.log(info);
