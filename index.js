@@ -41,6 +41,14 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/tourists-spot/email/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { userEmail : email};
+        const cursor = tourismCollection.find(query);
+        const result = await cursor.toArray()
+        res.send(result)
+    })
+    
     app.post('/tourists-spot', async (req, res) => {
         const info = req.body;
         console.log(info);
