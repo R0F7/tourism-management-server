@@ -35,6 +35,16 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/tourists-spot/sorting-data', async (req, res) => {
+                const cursor = tourismCollection.find();
+                const data = await cursor.toArray();
+                data.forEach(item => {
+                    item.average_cost = parseFloat(item.average_cost.trim());
+                });
+                const sortedData = data.sort((a, b) => a.average_cost - b.average_cost);
+                res.json(sortedData);
+        });
+
         app.get('/tourists-spot/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -58,7 +68,7 @@ async function run() {
 
         app.get('/tourists-country/:country', async (req, res) => {
             const country_name = req.params.country;
-            const query = { country_Name : country_name };
+            const query = { country_Name: country_name };
             const cursor = tourismCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
