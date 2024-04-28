@@ -56,6 +56,14 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/tourists-country/:country', async (req, res) => {
+            const country_name = req.params.country;
+            const query = { country_Name : country_name };
+            const cursor = tourismCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
         app.post('/tourists-spot', async (req, res) => {
             const info = req.body;
             console.log(info);
