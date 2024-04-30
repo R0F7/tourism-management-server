@@ -35,13 +35,23 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/tourists-spot/sorting-data', async (req, res) => {
+        app.get('/tourists-spot/sorting-data/ascending', async (req, res) => {
                 const cursor = tourismCollection.find();
                 const data = await cursor.toArray();
                 data.forEach(item => {
                     item.average_cost = parseFloat(item.average_cost.trim());
                 });
                 const sortedData = data.sort((a, b) => a.average_cost - b.average_cost);
+                res.json(sortedData);
+        });
+
+        app.get('/tourists-spot/sorting-data/descending', async (req, res) => {
+                const cursor = tourismCollection.find();
+                const data = await cursor.toArray();
+                data.forEach(item => {
+                    item.average_cost = parseFloat(item.average_cost.trim());
+                });
+                const sortedData = data.sort((a, b) => b.average_cost - a.average_cost);
                 res.json(sortedData);
         });
 
